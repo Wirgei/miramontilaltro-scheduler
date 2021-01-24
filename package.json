@@ -1,0 +1,28 @@
+{
+  "name": "mailer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wirgei/xfarma_mailer.git"
+  },
+  "author": "Alberto Piscini",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Wirgei/xfarma_mailer/issues"
+  },
+  "homepage": "https://github.com/Wirgei/xfarma_mailer#readme",
+  "devDependencies": {
+    "@types/mysql2": "github:types/mysql2",
+    "@types/nodemailer": "^6.4.0",
+    "typescript": "^4.1.3"
+  },
+  "dependencies": {
+    "mysql2": "^2.2.5",
+    "nodemailer": "^6.4.17"
+  }
+}
