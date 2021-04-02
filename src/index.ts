@@ -99,8 +99,8 @@ async function main() {
         let info = await transporter.sendMail({
           // from: '"Wirgei 👻" <it@xfarma.it>', // sender address
           from: '"it@xfarma.it" <it@xfarma.it>', // sender address
-          // to: "alberto@plannervision.com, massi@xfarma.it, n.ferrari@pharmextracta.com", // list of receivers
-          to: "wirgei@gmail.com", // list of receivers
+          to: "alberto@plannervision.com, massi@xfarma.it, n.ferrari@pharmextracta.com", // list of receivers
+          // to: "wirgei@gmail.com", // list of receivers
           subject: "xFarma.it - Statistiche di vendita", // Subject line
           // text: "Hello world?", // plain text body
           html: `
@@ -201,8 +201,8 @@ async function main() {
         let info = await transporter.sendMail({
           // from: '"Wirgei 👻" <it@xfarma.it>', // sender address
           from: '"it@xfarma.it" <it@xfarma.it>', // sender address
-          // to: "alberto@plannervision.com, massi@xfarma.it, n.ferrari@pharmextracta.com", // list of receivers
-          to: "wirgei@gmail.com", // list of receivers
+          to: "alberto@plannervision.com, massi@xfarma.it, amanzella@manettiroberts.it", // list of receivers
+          // to: "wirgei@gmail.com", // list of receivers
           subject: "xFarma.it - Statistiche di vendita", // Subject line
           // text: "Hello world?", // plain text body
           html: `
