@@ -3,10 +3,16 @@ import fs from 'fs';
 import { smpt } from './config';
 import nodemailer from 'nodemailer';
 
+const EMAIL_DEVELOPER = ['wirgei@gmail.com'];
+const EMAIL_XFARMA = ['wirgei@gmail.com', 'massi@xfarma.it'];
+const EMAIL_SUPPLIERS = ['alberto@plannervision.com', 'massi@xfarma.it', 'lorenzo.lazzarini@aesculapius.it'];
 
-main();
 
-async function main() {
+// main(EMAIL_DEVELOPER);
+main(EMAIL_XFARMA);
+// main(EMAIL_SUPPLIERS);
+
+async function main(emails: string[]) {
 
   let ArgumentsArray = [];
 
@@ -124,19 +130,15 @@ async function main() {
       switch (arg.toUpperCase()) {
 
         case 'PHARMEXTRACTA':
-          // await emailList.sellStats('PHARMEXTRACTA', 'PHARMEXTRACTA', ['wirgei@gmail.com']);
-          // await emailList.sellStats('PHARMEXTRACTA', 'PHARMEXTRACTA', ['alberto@plannervision.com', 'massi@xfarma.it', 'n.ferrari@pharmextracta.com']);
+          await emailList.sellStats('PHARMEXTRACTA', 'PHARMEXTRACTA', emails);
           break;
 
         case 'MANETTI':
-          // await emailList.sellStats('L.MANETTI-H.ROBERTS & C.', 'L.MANETTI-H.ROBERTS & C.', ['wirgei@gmail.com']);
-          // await emailList.sellStats('L.MANETTI-H.ROBERTS & C.', 'L.MANETTI-H.ROBERTS & C.', ['alberto@plannervision.com', 'massi@xfarma.it', 'amanzella@manettiroberts.it']);
+          await emailList.sellStats('L.MANETTI-H.ROBERTS & C.', 'L.MANETTI-H.ROBERTS & C.', emails);
           break;
 
         case 'AESCULAPIUS':
-          // await emailList.sellStats('AESCULAPIUS FARMACEUTICI', 'AESCULAPIUS FARMACEUTICI', ['wirgei@gmail.com']);
-          await emailList.sellStats('AESCULAPIUS FARMACEUTICI', 'AESCULAPIUS FARMACEUTICI', ['wirgei@gmail.com', 'massi@xfarma.it']);
-          // await emailList.sellStats('AESCULAPIUS FARMACEUTICI', 'AESCULAPIUS FARMACEUTICI', ['alberto@plannervision.com', 'massi@xfarma.it', 'lorenzo.lazzarini@aesculapius.it']);
+          await emailList.sellStats('AESCULAPIUS FARMACEUTICI', 'AESCULAPIUS FARMACEUTICI', emails);
           break;
 
         default:
