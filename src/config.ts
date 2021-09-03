@@ -1,10 +1,10 @@
 import { ILoggerOptions, logLevel } from '@wirgei/logger';
 
 export const mysql = {
-  host: '54.36.112.202',
+  host: 'xfarma.it',
   user: 'mailer',
   password: 'byNHuUNwc2cG',
-  port: 3306,
+  port: 13306,
   database: 'magento',
   waitForConnections: true,
   connectionLimit: 10,
