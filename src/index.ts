@@ -31,7 +31,8 @@ async function main() {
       , i.name AS nome
       , a.postcode
       , upper(a.region) AS provincia
-      , COUNT(o.entity_id) AS num
+      -- , COUNT(o.entity_id) AS num
+      , round(SUM(i.qty_invoiced),0) AS num
 
       FROM magento.sales_order o
 
@@ -124,17 +125,18 @@ async function main() {
 
         case 'PHARMEXTRACTA':
           // await emailList.sellStats('PHARMEXTRACTA', 'PHARMEXTRACTA', ['wirgei@gmail.com']);
-          await emailList.sellStats('PHARMEXTRACTA', 'PHARMEXTRACTA', ['alberto@plannervision.com', 'massi@xfarma.it', 'n.ferrari@pharmextracta.com']);
+          // await emailList.sellStats('PHARMEXTRACTA', 'PHARMEXTRACTA', ['alberto@plannervision.com', 'massi@xfarma.it', 'n.ferrari@pharmextracta.com']);
           break;
 
         case 'MANETTI':
           // await emailList.sellStats('L.MANETTI-H.ROBERTS & C.', 'L.MANETTI-H.ROBERTS & C.', ['wirgei@gmail.com']);
-          await emailList.sellStats('L.MANETTI-H.ROBERTS & C.', 'L.MANETTI-H.ROBERTS & C.', ['alberto@plannervision.com', 'massi@xfarma.it', 'amanzella@manettiroberts.it']);
+          // await emailList.sellStats('L.MANETTI-H.ROBERTS & C.', 'L.MANETTI-H.ROBERTS & C.', ['alberto@plannervision.com', 'massi@xfarma.it', 'amanzella@manettiroberts.it']);
           break;
 
         case 'AESCULAPIUS':
           // await emailList.sellStats('AESCULAPIUS FARMACEUTICI', 'AESCULAPIUS FARMACEUTICI', ['wirgei@gmail.com']);
-          await emailList.sellStats('AESCULAPIUS FARMACEUTICI', 'AESCULAPIUS FARMACEUTICI', ['alberto@plannervision.com', 'massi@xfarma.it', 'lorenzo.lazzarini@aesculapius.it']);
+          await emailList.sellStats('AESCULAPIUS FARMACEUTICI', 'AESCULAPIUS FARMACEUTICI', ['wirgei@gmail.com', 'massi@xfarma.it']);
+          // await emailList.sellStats('AESCULAPIUS FARMACEUTICI', 'AESCULAPIUS FARMACEUTICI', ['alberto@plannervision.com', 'massi@xfarma.it', 'lorenzo.lazzarini@aesculapius.it']);
           break;
 
         default:
