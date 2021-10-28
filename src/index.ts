@@ -3,16 +3,29 @@ import fs from 'fs';
 import { smpt } from './config';
 import nodemailer from 'nodemailer';
 
+// const EMAIL_XFARMA = ['wirgei@gmail.com', 'massi@xfarma.it'];
+// const EMAIL_SUPPLIERS = ['alberto@plannervision.com', 'massi@xfarma.it', 'lorenzo.lazzarini@aesculapius.it'];
+
+
+// Hard code mail receivers
 const EMAIL_DEVELOPER = ['wirgei@gmail.com'];
-const EMAIL_XFARMA = ['wirgei@gmail.com', 'massi@xfarma.it'];
-const EMAIL_SUPPLIERS = ['alberto@plannervision.com', 'massi@xfarma.it', 'lorenzo.lazzarini@aesculapius.it'];
+const EMAIL_XFARMA = ['alberto@plannervision.it', 'massi@xfarma.it'];
+const EMAILS_AESCULAPIUS = ['lorenzo.lazzarini@aesculapius.it'];
+const EMAILS_PHARMEXTRACTA = ['a.callegari@pharmextracta.com', 'n.ferrari@pharmextracta.com'];
+const EMAILS_MANETTI = ['amanzella@manettiroberts.it'];
 
+main();
+// main(false, true);
 
-// main(EMAIL_DEVELOPER);
-main(EMAIL_XFARMA);
-// main(EMAIL_SUPPLIERS);
+async function main(isTest: boolean = false, blockSend: boolean = false) {
 
-async function main(emails: string[]) {
+  let pause = (timeout: number) => {
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, timeout);
+    })
+  }
 
   let ArgumentsArray = [];
 
@@ -26,7 +39,8 @@ async function main(emails: string[]) {
 
       sellStats: async (intestazione: string, mysqlFilter: string, emailsTo: string[]) => {
 
-        console.log(intestazione);
+        emailsTo = emailsTo.concat(EMAIL_XFARMA);
+        if(isTest) emailsTo = EMAIL_DEVELOPER;
 
         let orderFile = fs.createWriteStream('orders.csv');
 
@@ -98,10 +112,7 @@ async function main(emails: string[]) {
           orderFile.write(Object.values(row).join(';') + '\r\n');
         }
 
-        let transporter = nodemailer.createTransport(smpt);
-
-
-        let info = await transporter.sendMail({
+        let playload = {
           from: '"it@xfarma.it" <it@xfarma.it>', // sender address
           to: emailsTo.join(', '),
           subject: "xFarma.it - Statistiche di vendita", // Subject line
@@ -116,9 +127,16 @@ async function main(emails: string[]) {
 
             { path: orderFile.path.toString() }
           ]
-        });
+        };
 
-        console.log({ info });
+        console.log({playload});
+
+        if(blockSend) return;
+
+        let transporter = nodemailer.createTransport(smpt);
+        let response = await transporter.sendMail(playload);
+        console.log({ response });
+
 
 
       },
@@ -130,15 +148,15 @@ async function main(emails: string[]) {
       switch (arg.toUpperCase()) {
 
         case 'PHARMEXTRACTA':
-          await emailList.sellStats('PHARMEXTRACTA', 'PHARMEXTRACTA', emails);
+          await emailList.sellStats('PHARMEXTRACTA', 'PHARMEXTRACTA', EMAILS_PHARMEXTRACTA);
           break;
 
         case 'MANETTI':
-          await emailList.sellStats('L.MANETTI-H.ROBERTS & C.', 'L.MANETTI-H.ROBERTS & C.', emails);
+          await emailList.sellStats('L.MANETTI-H.ROBERTS & C.', 'L.MANETTI-H.ROBERTS & C.', EMAILS_MANETTI);
           break;
 
         case 'AESCULAPIUS':
-          await emailList.sellStats('AESCULAPIUS FARMACEUTICI', 'AESCULAPIUS FARMACEUTICI', emails);
+          await emailList.sellStats('AESCULAPIUS FARMACEUTICI', 'AESCULAPIUS FARMACEUTICI', EMAILS_AESCULAPIUS);
           break;
 
         default:
