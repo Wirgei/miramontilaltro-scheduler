@@ -15,7 +15,7 @@ const EMAILS_PHARMEXTRACTA = ['a.callegari@pharmextracta.com', 'n.ferrari@pharme
 const EMAILS_MANETTI = ['amanzella@manettiroberts.it'];
 
 main();
-// main(false, true);
+// main(true, false); // testare mandando le mail su wirgei@gmail.com
 
 async function main(isTest: boolean = false, blockSend: boolean = false) {
 
@@ -40,7 +40,7 @@ async function main(isTest: boolean = false, blockSend: boolean = false) {
       sellStats: async (intestazione: string, mysqlFilter: string, emailsTo: string[]) => {
 
         emailsTo = emailsTo.concat(EMAIL_XFARMA);
-        if(isTest) emailsTo = EMAIL_DEVELOPER;
+        if (isTest) emailsTo = EMAIL_DEVELOPER;
 
         let orderFile = fs.createWriteStream('orders.csv');
 
@@ -129,9 +129,9 @@ async function main(isTest: boolean = false, blockSend: boolean = false) {
           ]
         };
 
-        console.log({playload});
+        console.log({ playload });
 
-        if(blockSend) return;
+        if (blockSend) return;
 
         let transporter = nodemailer.createTransport(smpt);
         let response = await transporter.sendMail(playload);
