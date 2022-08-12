@@ -9,10 +9,12 @@ import nodemailer from 'nodemailer';
 
 // Hard code mail receivers
 const EMAIL_DEVELOPER = ['wirgei@gmail.com'];
+
 const EMAIL_XFARMA = ['alberto@plannervision.it', 'massi@xfarma.it'];
 const EMAILS_AESCULAPIUS = ['lorenzo.lazzarini@aesculapius.it'];
 const EMAILS_PHARMEXTRACTA = ['a.callegari@pharmextracta.com', 'n.ferrari@pharmextracta.com'];
 const EMAILS_MANETTI = ['amanzella@manettiroberts.it'];
+const EMAILS_LABORATORI_LEGREN = ['lucio@laboratorilegren.it'];
 
 main();
 // main(true, false); // testare mandando le mail su wirgei@gmail.com
@@ -49,7 +51,7 @@ async function main(isTest: boolean = false, blockSend: boolean = false) {
       , MONTH(i.created_at) AS mese
       , i.sku
       , i.name AS nome
-      , a.postcode
+      , a.postcode AS cap
       , upper(a.region) AS provincia
       -- , COUNT(o.entity_id) AS num
       , round(SUM(i.qty_invoiced),0) AS num
@@ -157,6 +159,10 @@ async function main(isTest: boolean = false, blockSend: boolean = false) {
 
         case 'AESCULAPIUS':
           await emailList.sellStats('AESCULAPIUS FARMACEUTICI', 'AESCULAPIUS FARMACEUTICI', EMAILS_AESCULAPIUS);
+          break;
+
+        case 'LABORATORI_LEGREN':
+          await emailList.sellStats('LABORATORI LEGREN', 'LABORATORI LEGREN', EMAILS_LABORATORI_LEGREN);
           break;
 
         default:
