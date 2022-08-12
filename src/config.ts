@@ -34,6 +34,6 @@ export const smpt =
   requireTLC: true,
   auth: {
     user: "it@xfarma.it",
-    pass: "klraubakxofeecrw", // Generata andando a creare una nuova password per applicazioni di terze parti nell'account google dell'utente
+    pass: "mjkiszglmvqzaswq", // Generata andando a creare una nuova password per applicazioni di terze parti nell'account google dell'utente
   }
 }
