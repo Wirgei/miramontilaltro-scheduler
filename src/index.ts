@@ -167,7 +167,7 @@ async function main(isTest: boolean = false, blockSend: boolean = false) {
           break;
 
         case 'MAP_ITALIA':
-          await emailList.sellStats('MAP ITALIA', 'MAP', EMAILS_MAP_ITALIA);
+          await emailList.sellStats('MAP ITALIA', 'MAHARISHI AYURVEDA', EMAILS_MAP_ITALIA);
           break;
 
         default:
