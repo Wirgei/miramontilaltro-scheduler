@@ -97,8 +97,6 @@ async function main(isTest: boolean = false, blockSend: boolean = false) {
       , a.region
 
       -- HAVING COUNT(o.entity_id) > 1
-
-
     `);
 
         let header = [];
@@ -139,9 +137,6 @@ async function main(isTest: boolean = false, blockSend: boolean = false) {
         let transporter = nodemailer.createTransport(smpt);
         let response = await transporter.sendMail(playload);
         console.log({ response });
-
-
-
       },
 
     }
@@ -173,6 +168,8 @@ async function main(isTest: boolean = false, blockSend: boolean = false) {
         default:
           break;
       }
+
+      await pause(1000);
     }
 
 
