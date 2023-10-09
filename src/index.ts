@@ -16,6 +16,7 @@ const EMAILS_PHARMEXTRACTA = ['a.callegari@pharmextracta.com', 'n.ferrari@pharme
 const EMAILS_MANETTI = ['amanzella@manettiroberts.it'];
 const EMAILS_LABORATORI_LEGREN = ['lucio@laboratorilegren.it'];
 const EMAILS_MAP_ITALIA = ['dati@mapitalia.com'];
+const EMAILS_BENEFICA = ['info@benefica.it'];
 
 main();
 // main(true, false); // testare mandando le mail su wirgei@gmail.com
@@ -163,6 +164,10 @@ async function main(isTest: boolean = false, blockSend: boolean = false) {
 
         case 'MAP_ITALIA':
           await emailList.sellStats('MAP ITALIA', 'MAHARISHI AYURVEDA', EMAILS_MAP_ITALIA);
+          break;
+
+        case 'BENEFICA':
+          await emailList.sellStats('Benefica', 'concessionaria Italia', EMAILS_BENEFICA);
           break;
 
         default:
