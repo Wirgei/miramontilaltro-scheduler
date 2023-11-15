@@ -56,7 +56,7 @@ async function main(isTest: boolean = false, blockSend: boolean = false) {
       , a.postcode AS cap
       , upper(a.region) AS provincia
       -- , COUNT(o.entity_id) AS num
-      , round(SUM(i.qty_invoiced),0) AS num
+      , round(SUM(i.qty_invoiced) * 0.80 ,0) AS num
 
       FROM magento.sales_order o
 
