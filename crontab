@@ -1,0 +1,3 @@
+## MAILER
+0 8 1 * * /usr/bin/node /opt/mailer/dist/index.js AESCULAPIUS MANETTI PHARMEXTRACTA LABORATORI_LEGREN MAP_ITALIA BENEFICA> /var/log/mailer/mailer.log 2>&1
+0 8 15 1,4,7,10 * /usr/bin/node /opt/mailer/dist/index.js COMMERCIALISTA> /var/log/mailer/mailer.log 2>&1
