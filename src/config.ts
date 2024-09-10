@@ -1,7 +1,7 @@
 import { ILoggerOptions, logLevel } from '@wirgei/logger';
 
 export const mysql = {
-  host: 'xfarma.it',
+  host: 'server1.xfarma.it',
   user: 'mailer',
   password: 'byNHuUNwc2cG',
   port: 13306,
