@@ -1,11 +1,11 @@
 import { ILoggerOptions, logLevel } from '@wirgei/logger';
 
-export const mysql = {
-  host: 'server1.xfarma.it',
+export const mysqlSynology = {
+  host: '10.0.0.20',
   user: 'mailer',
-  password: 'byNHuUNwc2cG',
-  port: 13306,
-  database: 'magento',
+  password: 'byNHuUNwc2cGbyNHuUNwc2cG88!!',
+  port: 3307,
+  database: 'cassa',
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
@@ -33,7 +33,7 @@ export const smpt =
   secure: false,
   requireTLC: true,
   auth: {
-    user: "it@xfarma.it",
-    pass: "mjkiszglmvqzaswq", // Generata andando a creare una nuova password per applicazioni di terze parti nell'account google dell'utente
+    user: "alberto@miramontilaltro.it",
+    pass: "hojligfczubhozof", // Generata andando a creare una nuova password per applicazioni di terze parti nell'account google dell'utente
   }
 }

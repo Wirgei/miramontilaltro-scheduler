@@ -23,7 +23,8 @@
   },
   "dependencies": {
     "@wirgei/logger": "^1.0.0",
-    "mysql2": "^2.2.5",
-    "nodemailer": "^6.4.17"
+    "mysql2": "^3.11.2",
+    "nodemailer": "^6.4.17",
+    "xlsx": "^0.18.5"
   }
 }
