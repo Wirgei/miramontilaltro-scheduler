@@ -12,7 +12,7 @@
     ".git",
     ".DS_Store",
     "tsconfig.json",
-    "*_empty"
+    "*_template"
   ],
   "profiles": {
     "Synology": {
