@@ -11,7 +11,8 @@
     ".vscode",
     ".git",
     ".DS_Store",
-    "tsconfig.json"
+    "tsconfig.json",
+    "*_empty"
   ],
   "profiles": {
     "Synology": {
