@@ -1,5 +1,3 @@
-import { ILoggerOptions, logLevel } from '@wirgei/logger';
-
 export const mysqlSynology = {
   host: '10.0.0.20',
   user: 'mailer',
@@ -16,13 +14,6 @@ export const mysqlSynology = {
       return (bytes[0] === 1);
     }
     return (useDefaultTypeCasting());
-  }
-};
-
-export const logger: { config: ILoggerOptions } = {
-  config: {
-    logLevel: logLevel.DEBUG,
-    alwaysShowStackTrace: true
   }
 };
 
