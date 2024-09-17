@@ -1,0 +1,27 @@
+{
+  "uploadOnSave": true,
+  "watcher": {
+    "files": "**/*.{js,json}",
+    "autoUpload": true,
+    "autoDelete": true
+  },
+  "ignore": [
+    "**/node_modules/**",
+    "src/**",
+    ".vscode",
+    ".git",
+    ".DS_Store",
+    "tsconfig.json"
+  ],
+  "profiles": {
+    "Synology": {
+      "protocol": "ftp",
+      "port": 21,
+      "host": "",
+      "username": "",
+      "password": "",
+      "remotePath": "/home/node/miramontilaltro_mailer/"
+    }
+  },
+  "defaultProfile": ""
+}
