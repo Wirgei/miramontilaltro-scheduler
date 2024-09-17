@@ -8,7 +8,7 @@ export let query = async (sql: string, values?: any | any[] | { [param: string]:
 
   try {
 
-    if (!pool) pool = Mysql.createPool(config.mysqlSynology);
+    if (!pool) pool = Mysql.createPool(config.mysqlSynology as Mysql.PoolOptions);
 
     return await pool.query(sql, values);
   } catch (err) {

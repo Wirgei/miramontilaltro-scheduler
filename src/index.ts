@@ -1,6 +1,6 @@
 import * as db from './db';
 import { smpt } from './config';
-import nodemailer from 'nodemailer';
+import nodemailer, { TransportOptions } from 'nodemailer';
 import * as XLSX from 'xlsx';
 import * as os from 'os';
 import * as path from 'path';
@@ -90,7 +90,6 @@ async function main() {
 
         let tmpDir = os.tmpdir();
         let filePath = path.join(tmpDir, 'elencoDaControllare.xlsx');
-        // let filePath = 'dati.xlsx';
 
         await xmls(newData, filePath, WORKSHEET_COLS, WORKSHEET_MARGIN);
 
@@ -127,8 +126,6 @@ async function main() {
   }
 }
 
-
-
 async function sendEmail(to: string[], subject: string, body: string, attachments: any[] = []) {
 
   let playload = {
@@ -138,7 +135,7 @@ async function sendEmail(to: string[], subject: string, body: string, attachment
     html: body,
     attachments,
   };
-  let transporter = nodemailer.createTransport(smpt);
+  let transporter = nodemailer.createTransport(smpt as TransportOptions);
 
   try {
     return await transporter.sendMail(playload);

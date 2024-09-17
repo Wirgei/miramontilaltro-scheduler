@@ -1,9 +1,11 @@
+import 'dotenv/config'
+
 export const mysqlSynology = {
-  host: '10.0.0.20',
-  user: 'mailer',
-  password: 'byNHuUNwc2cGbyNHuUNwc2cG88!!',
-  port: 3307,
-  database: 'cassa',
+  host: process.env.MARIADB_HOST,
+  user: process.env.MARIADB_USER,
+  password: process.env.MARIADB_PASSWORD,
+  port: process.env.MARIADB_PORT,
+  database: process.env.MARIADB_DATABASE,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
@@ -19,12 +21,15 @@ export const mysqlSynology = {
 
 export const smpt =
 {
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-  requireTLC: true,
+  host: process.env.SMTP_HOST,
+  port: process.env.SMTP_PORT,
+  secure: process.env.SMTP_SECURE,
+  requireTLC: process.env.SMTP_REQUIRE_TLC,
   auth: {
-    user: "alberto@miramontilaltro.it",
-    pass: "hojligfczubhozof", // Generata andando a creare una nuova password per applicazioni di terze parti nell'account google dell'utente
+    user: process.env.SMTP_AUTH_USER,
+    pass: process.env.SMTP_AUTH_PASS, // Generata andando a creare una nuova password per applicazioni di terze parti nell'account google dell'utente
   }
 }
+
+console.log(mysqlSynology);
+console.log(smpt);
