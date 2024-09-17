@@ -5,20 +5,12 @@ import * as XLSX from 'xlsx';
 import * as os from 'os';
 import * as path from 'path';
 
-// const EMAIL_XFARMA = ['wirgei@gmail.com', 'massi@xfarma.it'];
-// const EMAIL_SUPPLIERS = ['alberto@plannervision.com', 'massi@xfarma.it', 'lorenzo.lazzarini@aesculapius.it'];
-
+import moment from 'moment';
+moment.locale('it');
 
 // Hard code mail receivers
 const EMAIL_DEVELOPER = ['alberto@plannervision.it'];
-
-const CANTINA = ['mauro@miramontilaltro.it'];
-
-
-
-
-
-
+const CANTINA = ['mauro@miramontilaltro.it', 'alberto@miramontilaltro.it'];
 
 main();
 
@@ -46,6 +38,8 @@ async function main() {
 
         const WORKSHEET_MARGIN = { left: 0.0, right: 0.0, top: 0.0, bottom: 0.0, header: 0.0, footer: 0.0 };
 
+        let selectedDay = moment().subtract(1, 'day');
+
         let [rows, fields] = await db.query(`              
           SELECT sum(cp.Quantità) AS qta
           , concat(v.produttore, ' ', v.descrizione) AS vino
@@ -61,7 +55,7 @@ async function main() {
           INNER JOIN cassa.tblPortateCategorie pc ON pc.IDPortateCategoria = p.FKPortateCategorie
           INNER JOIN cassa.carta_dei_vini v ON v.id = cp.FKEsterno
 
-          WHERE c.DataStampa = CURRENT_DATE() - INTERVAL 1 DAY
+          WHERE c.DataStampa = '${selectedDay.format("YYYY-MM-DD")}'
             AND pc.Nome = 'Vini'
             AND cp.FKEsterno IS NOT null
             
@@ -82,10 +76,7 @@ async function main() {
 
         let newData = [];
 
-        let yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
-
-        newData.push(['', new Date().toLocaleDateString('it-IT')]);
+        newData.push(['', selectedDay.format('dddd, LL')]);
 
         let header = [];
         for (let field of fields) {
@@ -104,7 +95,7 @@ async function main() {
         await xmls(newData, filePath, WORKSHEET_COLS, WORKSHEET_MARGIN);
 
         await sendEmail(
-          ['alberto@plannervision.com'],
+          emailsTo,
           'Vini da verificare',
           `<p>Spettabile ${intestazione},</p><p>in allegato i dati richiesti.</p>`,
           [{ path: filePath }]
@@ -117,7 +108,7 @@ async function main() {
       switch (arg.toUpperCase()) {
 
         case 'CANTINA':
-          await tasks.wineStats('Maurizio Piscini', EMAIL_DEVELOPER);
+          await tasks.wineStats('Miramonti l\'altro', CANTINA);
           break;
 
         default:
