@@ -9,7 +9,7 @@ import moment from 'moment';
 moment.locale('it');
 
 // Hard code mail receivers
-const EMAIL_DEVELOPER = ['alberto@plannervision.it'];
+// const CANTINA = ['alberto@plannervision.it'];
 const CANTINA = ['mauro@miramontilaltro.it', 'alberto@miramontilaltro.it'];
 
 main();
