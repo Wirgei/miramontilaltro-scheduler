@@ -1,11 +1,28 @@
-import 'dotenv/config'
+import fs from 'fs';
+import path from 'path';
+
+// Function to read and parse the configuration file
+function loadConfig(filePath: string) {
+  const config = fs.readFileSync(filePath, 'utf-8');
+  const envVariables = config.split('\n').reduce((acc, line) => {
+    const [key, value] = line.split('=');
+    if (key && value) {
+      acc[key.trim()] = value.trim().replace(/^['"]|['"]$/g, ''); // Remove surrounding quotes
+    }
+    return acc;
+  }, {} as Record<string, string>);
+  return envVariables;
+}
+
+// Load environment variables from the configuration file
+const env = loadConfig(path.resolve(__dirname, '../.env'));
 
 export const mysqlSynology = {
-  host: process.env.MARIADB_HOST,
-  user: process.env.MARIADB_USER,
-  password: process.env.MARIADB_PASSWORD,
-  port: parseInt(process.env.MARIADB_PORT ?? ''),
-  database: process.env.MARIADB_DATABASE,
+  host: env.MARIADB_HOST,
+  user: env.MARIADB_USER,
+  password: env.MARIADB_PASSWORD,
+  port: parseInt(env.MARIADB_PORT ?? ''),
+  database: env.MARIADB_DATABASE,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
@@ -21,14 +38,14 @@ export const mysqlSynology = {
 
 export const smpt =
 {
-  host: process.env.SMTP_HOST,
-  port: parseInt(process.env.SMTP_PORT ?? ''),
-  secure: process.env.SMTP_SECURE === 'true',
-  requireTLC: process.env.SMTP_REQUIRE_TLC === 'true',
+  host: env.SMTP_HOST,
+  port: parseInt(env.SMTP_PORT ?? ''),
+  secure: env.SMTP_SECURE === 'true',
+  requireTLC: env.SMTP_REQUIRE_TLC === 'true',
   auth: {
-    user: process.env.SMTP_AUTH_USER,
-    pass: process.env.SMTP_AUTH_PASS, // Generata andando a creare una nuova password per applicazioni di terze parti nell'account google dell'utente
+    user: env.SMTP_AUTH_USER,
+    pass: env.SMTP_AUTH_PASS, // Generata andando a creare una nuova password per applicazioni di terze parti nell'account google dell'utente
   }
 }
 
-// console.log({smpt});
+console.log({mysqlSynology, smpt});
