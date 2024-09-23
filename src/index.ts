@@ -41,26 +41,48 @@ async function main() {
 
         let [rows, fields] = await db.query(`              
           SELECT sum(cp.Quantità) AS qta
-            , cp.NomePortateFinale AS descrizione
-            , avg(cp.Prezzo) AS prezzo
-            , avg(cp.PrezzoListino) AS listino
-            , GROUP_CONCAT(c.Tag) AS tags
+          , cp.NomePortateFinale AS descrizione
+          , avg(cp.Prezzo) AS prezzo
+          , avg(cp.PrezzoListino) AS listino
+          , GROUP_CONCAT(c.Tag) AS tags
 
           FROM cassa.tblConti c
-            INNER JOIN cassa.tblContiPortate cp ON cp.FKConto = c.IDConto
-            LEFT JOIN cassa.tblMenùPortate mp ON mp.IDMenùPortate = cp.FKMenùPortate
-            LEFT JOIN cassa.tblMenù m ON m.IDMenù = mp.FKMenù
-            LEFT JOIN cassa.tblPortate p ON p.IDPortata = mp.FKPortate
-            LEFT JOIN cassa.tblPortateCategorie pc ON pc.IDPortateCategoria = p.FKPortateCategorie
+          INNER JOIN cassa.tblContiPortate cp ON cp.FKConto = c.IDConto
+          LEFT JOIN cassa.tblMenùPortate mp ON mp.IDMenùPortate = cp.FKMenùPortate
+          LEFT JOIN cassa.tblMenù m ON m.IDMenù = mp.FKMenù
+          LEFT JOIN cassa.tblPortate p ON p.IDPortata = mp.FKPortate
+          LEFT JOIN cassa.tblPortateCategorie pc ON pc.IDPortateCategoria = p.FKPortateCategorie
 
-          WHERE c.DataStampa = '2024-09-19'
-            AND pc.Nome = 'Vini'
-            AND cp.FKEsterno IS NOT null
-            
+          WHERE c.DataStampa = '${selectedDay.format("YYYY-MM-DD")}'
+          AND pc.Nome = 'Vini'
+          AND cp.FKEsterno IS NOT null
+
           GROUP BY cp.NomePortateFinale
           , c.FKServizio
 
-          ORDER BY cp.NomePortateFinale
+          UNION
+
+          SELECT x.saldo_carichi * (-1) AS qta
+          , x.descrizione
+          , null AS prezzo
+          , null AS listino
+          , 'sommelier' AS tags
+          FROM (
+
+          SELECT s.DescrizioneVino AS descrizione
+          , s.AnnataVino AS annata
+          , SUM(IFNULL(s.BottCaricate,0)) AS serie_carichi
+          , SUM(IFNULL(s.BottScaricate,0)) AS serie_scarichi
+
+          , SUM(IFNULL(s.BottCaricate,0)) + SUM(IFNULL(s.BottScaricate,0)) AS saldo_carichi
+          FROM cantina.tblViniStoricoSommelier s
+          WHERE s.inserted >= CONCAT('${selectedDay.format("YYYY-MM-DD")}', ' 05:00:00') 
+          AND s.inserted < CONCAT(DATE('${selectedDay.format("YYYY-MM-DD")}') + INTERVAL 1 DAY, ' 05:00:00')
+          GROUP BY s.DescrizioneVino
+          , s.AnnataVino
+
+          HAVING SUM(IFNULL(s.BottCaricate,0)) + SUM(IFNULL(s.BottScaricate,0)) < 0
+          ) AS x ;
           `
         );
 
