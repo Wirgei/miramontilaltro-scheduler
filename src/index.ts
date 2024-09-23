@@ -29,8 +29,7 @@ async function main() {
       wineStats: async (intestazione: string, emailsTo: string[]) => {
         const WORKSHEET_COLS = [
           { wch: 2.5 },
-          { wch: 50 },
-          { wch: 7 },
+          { wch: 62 },
           { wch: 7 },
           { wch: 7 },
           { wch: 10 },
@@ -42,25 +41,24 @@ async function main() {
 
         let [rows, fields] = await db.query(`              
           SELECT sum(cp.Quantità) AS qta
-          , concat(v.produttore, ' ', v.descrizione) AS vino
-          , v.annata
-          , avg(cp.Prezzo) AS incasso
-          , avg(cp.PrezzoListino) AS prezzo
-          , group_concat(c.Tag) AS tags
-          FROM cassa.tblConti c
-          INNER JOIN cassa.tblContiPortate cp ON cp.FKConto = c.IDConto
-          INNER JOIN cassa.tblMenùPortate mp ON mp.IDMenùPortate = cp.FKMenùPortate
-          INNER JOIN cassa.tblMenù m ON m.IDMenù = mp.FKMenù
-          INNER JOIN cassa.tblPortate p ON p.IDPortata = mp.FKPortate
-          INNER JOIN cassa.tblPortateCategorie pc ON pc.IDPortateCategoria = p.FKPortateCategorie
-          INNER JOIN cassa.carta_dei_vini v ON v.id = cp.FKEsterno
+            , cp.NomePortateFinale AS descrizione
+            , avg(cp.Prezzo) AS prezzo
+            , avg(cp.PrezzoListino) AS listino
+            , GROUP_CONCAT(c.Tag) AS tags
 
-          WHERE c.DataStampa = '${selectedDay.format("YYYY-MM-DD")}'
+          FROM cassa.tblConti c
+            INNER JOIN cassa.tblContiPortate cp ON cp.FKConto = c.IDConto
+            LEFT JOIN cassa.tblMenùPortate mp ON mp.IDMenùPortate = cp.FKMenùPortate
+            LEFT JOIN cassa.tblMenù m ON m.IDMenù = mp.FKMenù
+            LEFT JOIN cassa.tblPortate p ON p.IDPortata = mp.FKPortate
+            LEFT JOIN cassa.tblPortateCategorie pc ON pc.IDPortateCategoria = p.FKPortateCategorie
+
+          WHERE c.DataStampa = '2024-09-19'
             AND pc.Nome = 'Vini'
             AND cp.FKEsterno IS NOT null
             
-          GROUP BY concat(v.produttore, ' ', v.descrizione)
-          , v.annata
+          GROUP BY cp.NomePortateFinale
+          , c.FKServizio
 
           ORDER BY cp.NomePortateFinale
           `
