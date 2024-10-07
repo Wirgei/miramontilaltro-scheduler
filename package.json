@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Wirgei/xfarma_mailer.git"
+    "url": "git+https://github.com/Wirgei/miramontilaltro-scheduler"
   },
   "author": "Alberto Piscini",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Wirgei/xfarma_mailer/issues"
+    "url": "https://github.com/Wirgei/miramontilaltro-scheduler"
   },
-  "homepage": "https://github.com/Wirgei/xfarma_mailer#readme",
+  "homepage": "https://github.com/Wirgei/miramontilaltro-scheduler#readme",
   "devDependencies": {
     "@types/mysql2": "github:types/mysql2",
     "@types/nodemailer": "^6.4.0",
