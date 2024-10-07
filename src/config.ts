@@ -48,4 +48,4 @@ export const smpt =
   }
 }
 
-console.log({mysqlSynology, smpt});
+// console.log({mysqlSynology, smpt});
