@@ -1,11 +1,14 @@
 import moment from 'moment';
 import * as db from './db';
 
-export default async function taskUpdateSomellierStock() {
+// taskUpdateSomellierStock(2);
+export default async function taskUpdateSomellierStock(days:  number = 1) {
 
-  let selectedDay = moment().subtract(1, 'day');
+  console.log('taskUpdateSomellierStock days:', days);
 
-  let [rows, fields] = await db.query<{id_vino: number, descrizione: string, qta: number, data_stampa: Date}>(`              
+  let selectedDay = moment().subtract(Math.abs(days), 'day');
+
+  let [rows] = await db.query<{id_vino: number, descrizione: string, qta: number, data_stampa: Date}>(`              
     SELECT cp.FKEsterno AS id_vino
     , cp.NomePortateFinale AS descrizione
     , sum(cp.Quantità) AS qta 
@@ -35,7 +38,7 @@ export default async function taskUpdateSomellierStock() {
 
     for (let row of rows) {
 
-      db.query('UPDATE cantina.tblVini v SET v.GiacenzaCantina = ? WHERE v.IDvino = ?', [row.qta * (-1), row.id_vino]);
+      db.query('UPDATE cantina.tblVini v SET v.GiacenzaCantina = v.GiacenzaCantina - ? WHERE v.IDvino = ?', [row.qta, row.id_vino]);
 
       // row.data_stampa.setHours(23, 59, 0, 0);
 
@@ -68,9 +71,4 @@ export default async function taskUpdateSomellierStock() {
     console.error(e);
     db.rollback();
   }
-
-
-
-
-
 }
