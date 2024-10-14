@@ -9,9 +9,7 @@ import * as XLSX from 'xlsx';
 import taskMailWineConsumption from './taskMailWineConsumption'
 import taskUpdateSomellierStock from './taskUpdateSomellierStock';
 
-// Hard code mail receivers
-// const CANTINA = ['alberto@plannervision.it'];
-const CANTINA = ['mauro@miramontilaltro.it', 'alberto@miramontilaltro.it'];
+const CANTINA = ['mauro@miramontilaltro.it'];
 
 main();
 
