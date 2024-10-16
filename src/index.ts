@@ -9,7 +9,7 @@ import * as XLSX from 'xlsx';
 import taskMailWineConsumption from './taskMailWineConsumption'
 import taskUpdateSomellierStock from './taskUpdateSomellierStock';
 
-const CANTINA = ['mauro@miramontilaltro.it'];
+const CANTINA = ['mauro@miramontilaltro.it', 'simofranc003.14@gmail.com'];
 
 main();
 
