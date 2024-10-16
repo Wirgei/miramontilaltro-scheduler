@@ -67,8 +67,8 @@ export default async function taskMailWineConsumption (intestazione: string, ema
   if (!(rows instanceof Array)) throw new Error('Rows isn\'t an array');
 
   if (rows.length === 0) {
-    await sendEmail(['alberto@plannervision.com'], 'Vini da verificare', `<p>Spettabile ${intestazione},</p><p>Non ci sono dati da verificare.</p>`);
-    console.log('No data to send');
+    // await sendEmail(['alberto@plannervision.com'], 'Vini da verificare', `<p>Spettabile ${intestazione},</p><p>Non ci sono dati da verificare.</p>`);
+    // console.log('No data to send');
     return;
   }
 
