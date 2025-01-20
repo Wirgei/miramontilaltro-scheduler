@@ -6,6 +6,7 @@ import * as db from './db';
 // Import tasks
 import taskMailWineConsumption from './taskMailWineConsumption'
 import taskUpdateSomellierStock from './taskUpdateSomellierStock';
+import { taskCheckInvoiceStatus } from './taskCheckInvoiceStatus';
 import { pause } from './utils';
 
 const CANTINA = ['mauro@miramontilaltro.it', 'simofrance003.14@gmail.com'];
@@ -32,6 +33,10 @@ async function main() {
 
         case 'AGGIORNA_GIANCEZE_SOMMELIER':
           await taskUpdateSomellierStock();
+          break;
+
+        case 'CONTROLLA_FATTURE':
+          await taskCheckInvoiceStatus('Miramonti l\'altro', ['alberto@miramontilaltro.it']);
           break;
 
         default:
