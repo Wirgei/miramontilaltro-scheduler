@@ -2,7 +2,7 @@ import moment from 'moment';
 import * as db from './db';
 import * as os from 'os';
 import * as path from 'path';
-import { sendEmail, xmls } from '.';
+import { sendEmail, xmls } from './utils';
 
 export default async function taskMailWineConsumption (intestazione: string, emailsTo: string[]): Promise<void> {
   const WORKSHEET_COLS = [
