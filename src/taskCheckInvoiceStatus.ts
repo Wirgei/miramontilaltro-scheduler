@@ -7,6 +7,7 @@ import { getFilesInFolder, sendEmail, xmls } from './utils';
 
 interface IClientInvoice {
   DataStampa: string; // ISO date string
+  Num: string,
   feNomeFile: string;
   IDCliente: number;
   Tipo: string;
@@ -38,6 +39,7 @@ export const taskCheckInvoiceStatus = async (intestazione: string, emailsTo: str
 
   const WORKSHEET_COLS = [
     { wch: 11 },
+    { wch: 5 },
     { wch: 11 },
     { wch: 24 },
     { wch: 30 },
@@ -58,6 +60,7 @@ export const taskCheckInvoiceStatus = async (intestazione: string, emailsTo: str
 
     let [rows] = await db.query<IClientInvoice>(`              
       SELECT t.DataStampa
+      , t.Numerazione as Num
       , t.feNomeFile
       , "" AS errore
       , c.* FROM tblConti t 
@@ -83,12 +86,13 @@ export const taskCheckInvoiceStatus = async (intestazione: string, emailsTo: str
 
     newData.push(['', moment().format('dddd, LL')]);
 
-    let header = ['Data', 'Errore', 'Nome File', 'Cliente', 'Codice Fiscale', 'Partita IVA', 'Indirizzo', 'Telefono', 'eMail'];
+    let header = ['Data', 'Num', 'Errore', 'Numero', 'Nome File', 'Cliente', 'Codice Fiscale', 'Partita IVA', 'Indirizzo', 'Telefono', 'eMail'];
     newData.push(header);
 
     for (let row of invoiceFailed) {
       newData.push([
         row.DataStampa,
+        row.Num,
         row.errore,
         row.feNomeFile,
         row.Società || ((row.Nome || '') + ' ' + (row.Cognome || '')),
