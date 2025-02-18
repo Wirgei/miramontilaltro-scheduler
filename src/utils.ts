@@ -1,5 +1,4 @@
 import * as fs from 'fs';
-import * as path from 'path';
 import { smpt } from './config';
 import nodemailer, { TransportOptions } from 'nodemailer';
 import * as XLSX from 'xlsx';
