@@ -34,8 +34,8 @@ interface IClientInvoice {
 
 export const taskCheckInvoiceStatus = async (intestazione: string, emailsTo: string[]): Promise<void> => {
 
-  const SENT_INVOICE_FOLDER_PATH = '/volume1/projects/fatture_daniela/Trasmesse';
-  const ERROR_INVOICE_FOLDER_PATH = '/volume1/projects/fatture_daniela/Errori';
+  const SENT_INVOICE_FOLDER_PATH = '/volume1/remote/daniela/fatture/Trasmesse';
+  const ERROR_INVOICE_FOLDER_PATH = '/volume1/remote/daniela/fatture/Errori';
 
   const WORKSHEET_COLS = [
     { wch: 11 },
