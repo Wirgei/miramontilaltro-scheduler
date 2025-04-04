@@ -8,6 +8,7 @@ import taskMailWineConsumption from './taskMailWineConsumption'
 import taskUpdateSomellierStock from './taskUpdateSomellierStock';
 import { taskCheckInvoiceStatus } from './taskCheckInvoiceStatus';
 import { pause } from './utils';
+import taskCheckDeletedBill from './taskCheckDeletedBill';
 
 const CANTINA = ['mauro@miramontilaltro.it', 'simofrance003.14@gmail.com'];
 
@@ -36,7 +37,11 @@ async function main() {
           break;
 
         case 'CONTROLLA_FATTURE':
-          await taskCheckInvoiceStatus('Miramonti l\'altro', ['alberto@miramontilaltro.it']);
+          await taskCheckInvoiceStatus('Miramonti l\'altro', ['ufficio@miramontilaltro.it', 'alberto@miramontilaltro.it']);
+          break;
+
+        case 'CONTROLLA_CONTI_CANCELLATI':
+          await taskCheckDeletedBill('Miramonti l\'altro', ['ufficio@miramontilaltro.it']);
           break;
 
         default:
