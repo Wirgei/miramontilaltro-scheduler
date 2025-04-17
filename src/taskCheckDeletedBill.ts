@@ -12,6 +12,7 @@ Promise<void> {
     { wch: 20 },
     { wch: 7 },
     { wch: 7 },
+    { wch: 20 },
     { wch: 7 },
     { wch: 7 },
     { wch: 7 },
@@ -33,6 +34,7 @@ Promise<void> {
     DATE_FORMAT(c.Data, '%d/%m/%Y %H:%i') as data_ora,
     (SELECT s.Nome from tblServizio s WHERE s.IDServizio  = c.FKServizio) AS servizio,
     (SELECT t.Nome FROM tblTavoli t WHERE t.IDTavolo = c.FKTavolo) AS tavolo,
+    (SELECT CONCAT(ifnull(l.Società,''), ' ', ifnull(l.nome,''), ' ',  ifnull(l.Cognome,'')) FROM tblClienti l WHERE l.IDCliente = c.FKCliente) AS cliente, 
       (
       SELECT
         tblContiPortate.Quantità
@@ -185,7 +187,7 @@ Promise<void> {
 
   if (rows.length === 0) {
     // await sendEmail(['alberto@plannervision.com'], 'Vini da verificare', `<p>Spettabile ${intestazione},</p><p>Non ci sono dati da verificare.</p>`);
-    // console.log('No data to send');
+    console.log('No data to send');
     return;
   }
 
