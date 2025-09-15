@@ -65,7 +65,8 @@ export const taskCheckInvoiceStatus = async (intestazione: string, emailsTo: str
       , "" AS errore
       , c.* FROM tblConti t 
       LEFT JOIN tblClienti c ON c.IDCliente = t.FKCliente
-      WHERE t.FKTipoDocumentoFiscale = 2 AND t.DataStampa >= DATE_SUB(CURRENT_DATE, INTERVAL ? DAY);
+      WHERE t.FKTipoDocumentoFiscale = 2 AND t.DataStampa >= DATE_SUB(CURRENT_DATE, INTERVAL ? DAY)
+      ORDER BY t.Numerazione;
       `,
       [DAYS]
     );
@@ -73,7 +74,27 @@ export const taskCheckInvoiceStatus = async (intestazione: string, emailsTo: str
     const invoiceSuccessFiles: string[] = await getFilesInFolder(SENT_INVOICE_FOLDER_PATH);
     const invoiceErrorFiles: string[] = await getFilesInFolder(ERROR_INVOICE_FOLDER_PATH);
 
-    for (let invoiceInfos of rows) {
+    for (let i = 0; i < rows.length; i++) {
+      const invoiceInfos = rows[i];
+      const invoiceInfosNext = rows[i + 1];
+      const isLastRow = i === rows.length - 1;
+
+      // check if there is an invoice num missing
+      if (invoiceInfos.Num === null) {
+        invoiceFailed.push({ ...invoiceInfos, errore: 'Numero fattura mancante' });
+      } else if (!isLastRow) {
+        const currentNum = parseInt(invoiceInfos.Num, 10);
+        const nextNum = parseInt(invoiceInfosNext.Num, 10);
+
+        // Check if next number isn't exactly one more than current
+        if (!isNaN(currentNum) && !isNaN(nextNum) && nextNum !== currentNum + 1) {
+          // Create a note about the gap
+          const gapMessage = `Sequenza interrotta: manca il numero ${currentNum + 1}`;
+          invoiceFailed.push({ ...invoiceInfos, errore: gapMessage });
+        }
+      }
+
+      // Check if the invoice file is in the sent folder
       if (!invoiceSuccessFiles.includes(invoiceInfos.feNomeFile)) invoiceFailed.push({ ...invoiceInfos, errore: 'Non inviata' });
       if (!invoiceSuccessFiles.includes(invoiceInfos.feNomeFile) && !invoiceErrorFiles.includes(invoiceInfos.feNomeFile)) invoiceFailed.push({ ...invoiceInfos, errore: 'Errore' });
     }
