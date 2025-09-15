@@ -52,7 +52,7 @@ export const taskCheckInvoiceStatus = async (intestazione: string, emailsTo: str
 
   const WORKSHEET_MARGIN = { left: 0.0, right: 0.0, top: 0.0, bottom: 0.0, header: 0.0, footer: 0.0 };
 
-  const DAYS = 7;
+  const DAYS = 2;
 
   let invoiceFailed: IClientInvoice[] = [];
 
